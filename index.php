@@ -9,6 +9,9 @@
 <body>
 
     <?php
+
+        $catalog_path = "catalogs/";
+
         // качаем основную страницу в переменную $buf
         $buf=implode("",file("https://promoavon.ru/catalogs/"));
 
@@ -32,37 +35,40 @@
         $file_zip_3 = $url_zip_1[1][2];
         $file_zip_4 = $url_zip_1[1][3];
 
-        //Дирректория загрузки первого каталога
-        $uploaddir_1 = 'D:\Work\OpenServer\domains\parser2\catalogs\01_';
+        //создаем дирректорию для загрузки первого каталога
+        //$catalog_1_dir = preg_replace("/[^\d]/", '', $file_zip_1);
+        preg_match_all("/\d\d\d\d/", $file_zip_1, $catalog_1_dir_array);
+        $catalog_1_dir = $catalog_1_dir_array[0][0];
+        $uploaddir_1 = $catalog_path.$catalog_1_dir;
+        mkdir($uploaddir_1, 0755);
 
         // Загрузка первого файла на сервер
-        $uploadfile_1 = $uploaddir_1.basename($file_zip_1);
+        $uploadfile_1 = $uploaddir_1."/".basename($file_zip_1);
         // Копируем файл
         if (copy($file_zip_1, $uploadfile_1)){
             echo "Файл 1 успешно загружен на сервер<br>";
         }
 
         // Загрузка второго файла на сервер
-        $uploadfile_1 = $uploaddir_1.basename($file_zip_2);
+        $uploadfile_1 = $uploaddir_1."/".basename($file_zip_2);
         // Копируем файл
         if (copy($file_zip_2, $uploadfile_1)){
             echo "Файл 2 успешно загружен на сервер<br>";
         }
 
         // Загрузка третьего файла на сервер
-        $uploadfile_1 = $uploaddir_1.basename($file_zip_3);
+        $uploadfile_1 = $uploaddir_1."/".basename($file_zip_3);
         // Копируем файл
         if (copy($file_zip_3, $uploadfile_1)){
             echo "Файл 3 успешно загружен на сервер<br>";
         }
 
         // Загрузка четвертого файла на сервер
-        $uploadfile_1 = $uploaddir_1.basename($file_zip_4);
+        $uploadfile_1 = $uploaddir_1."/".basename($file_zip_4);
         // Копируем файл
         if (copy($file_zip_4, $uploadfile_1)){
             echo "Файл 4 успешно загружен на сервер<br>";
         }
-
     ?>
 
 </body>
