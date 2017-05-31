@@ -39,25 +39,87 @@
 
         //загрузка в текущий каталог custom-----------------------               
         // Копируем 1 файл в основной каталог
-        $custom_main = $custom_main."/".basename($file_zip_1_1);
-        if (copy($file_zip_1_1, $custom_main)){
-            echo "Файл 1_1 успешно загружен в текущий каталог <br>";
+        $custom_main_file = $custom_main."/".basename($file_zip_1_1);
+        if (copy($file_zip_1_1, $custom_main_file)){
+            echo "Файл 1_1 успешно загружен в текущий каталог <br>";            
         }
-        // Копируем 2 файл в дополнительный каталог
-        $custom_dop_1 = $custom_dop_1."/".basename($file_zip_1_2);
-        if (copy($file_zip_1_2, $custom_dop_1)){
+        
+        // Функция по извлечению файлов из архива без вложенных папок
+        function zip_flatten ( $zipfile, $dest='.' ) 
+        { 
+            $zip = new ZipArchive; 
+            if ( $zip->open( $zipfile ) ) 
+            { 
+                for ( $i=0; $i < $zip->numFiles; $i++ ) 
+                { 
+                    $entry = $zip->getNameIndex($i); 
+                    if ( substr( $entry, -1 ) == '/' ) continue;
+                    
+                    $fp = $zip->getStream( $entry ); 
+                    $ofp = fopen( $dest.'/'.basename($entry), 'w' ); 
+                    
+                    if ( ! $fp ) 
+                        throw new Exception('Unable to extract the file.'); 
+                    
+                    while ( ! feof( $fp ) ) 
+                        fwrite( $ofp, fread($fp, 8192) ); 
+                    
+                    fclose($fp); 
+                    fclose($ofp); 
+                } 
+
+                        $zip->close();
+            } 
+            else 
+                return false;            
+            return $zip;
+        } 
+        //распаковываем архив 1_1
+        if (zip_flatten( $custom_main_file, $custom_main )) {
+            echo 'Архив 1_1 успешно разархивирован';
+        }
+        else {
+            echo 'Ошибка распаковки Архива 1_1';    
+        }
+       
+        // Копируем 1_2 файл в дополнительный каталог
+        $custom_dop_1_file = $custom_dop_1."/".basename($file_zip_1_2);
+        if (copy($file_zip_1_2, $custom_dop_1_file)){
             echo "Файл 1_2 успешно загружен в текущий каталог <br>";
         }
+        //распаковываем архив 1_2
+        if (zip_flatten( $custom_dop_1_file, $custom_dop_1 )) {
+            echo 'Архив 1_2 успешно разархивирован';
+        }
+        else {
+            echo 'Ошибка распаковки Архива 1_2';    
+        }
+
         // Копируем 3 файл в дополнительный каталог
-        $custom_dop_2 = $custom_dop_2."/".basename($file_zip_1_3);
-        if (copy($file_zip_1_3, $custom_dop_2)){
+        $custom_dop_2_file = $custom_dop_2."/".basename($file_zip_1_3);
+        if (copy($file_zip_1_3, $custom_dop_2_file)){
             echo "Файл 1_3 успешно загружен в текущий каталог <br>";
         }
+        //распаковываем архив 1_3
+        if (zip_flatten( $custom_dop_2_file, $custom_dop_2 )) {
+            echo 'Архив 1_3 успешно разархивирован';
+        }
+        else {
+            echo 'Ошибка распаковки Архива 1_3';    
+        }
+
         // Копируем 4 файл в дополнительный каталог
-        $custom_dop_3 = $custom_dop_3."/".basename($file_zip_1_4);
-        if (copy($file_zip_1_4, $custom_dop_3)){
+        $custom_dop_3_file = $custom_dop_3."/".basename($file_zip_1_4);
+        if (copy($file_zip_1_4, $custom_dop_3_file)){
             echo "Файл 1_4 успешно загружен в текущий каталог <br>";
         }
+        //распаковываем архив 1_4
+        if (zip_flatten( $custom_dop_3_file, $custom_dop_3 )) {
+            echo 'Архив 1_4 успешно разархивирован';
+        }
+        else {
+            echo 'Ошибка распаковки Архива 1_4';    
+        }        
 
         //загрузка в дирректорию other-----------------------
         //создаем дирректорию для загрузки первого каталога
