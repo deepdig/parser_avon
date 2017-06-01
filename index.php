@@ -8,11 +8,27 @@
 
     <?php
         set_time_limit(540);
+
         $custom_main = "zip_catalog/custom/main/";
         $custom_dop_1 = "zip_catalog/custom/dop_1/";
         $custom_dop_2 = "zip_catalog/custom/dop_2/";
         $custom_dop_3 = "zip_catalog/custom/dop_3/";
         $catalog_path = "zip_catalog/other/";
+
+        $сurrent_path_1_main = "zip_catalog/сurrent/сurrent_1/main/";
+        $сurrent_path_1_dop_1 = "zip_catalog/сurrent/сurrent_1/dop_1/";
+        $сurrent_path_1_dop_2 = "zip_catalog/сurrent/сurrent_1/dop_2/";
+        $сurrent_path_1_dop_3 = "zip_catalog/сurrent/сurrent_1/dop_3/";
+
+        $сurrent_path_2_main = "zip_catalog/сurrent/сurrent_2/main/";
+        $сurrent_path_2_dop_1 = "zip_catalog/сurrent/сurrent_2/dop_1/";
+        $сurrent_path_2_dop_2 = "zip_catalog/сurrent/сurrent_2/dop_2/";
+        $сurrent_path_2_dop_3 = "zip_catalog/сurrent/сurrent_2/dop_3/";
+
+        $сurrent_path_3_main = "zip_catalog/сurrent/сurrent_3/main/";
+        $сurrent_path_3_dop_1 = "zip_catalog/сurrent/сurrent_3/dop_1/";
+        $сurrent_path_3_dop_2 = "zip_catalog/сurrent/сurrent_3/dop_2/";
+        $сurrent_path_3_dop_3 = "zip_catalog/сurrent/сurrent_3/dop_3/";
 
         // качаем основную страницу в переменную $buf
         $buf=implode("",file("https://promoavon.ru/catalogs/"));
@@ -37,7 +53,7 @@
         $file_zip_1_3 = $url_zip_1[1][2];
         $file_zip_1_4 = $url_zip_1[1][3];
 
-        //загрузка в текущий каталог custom-----------------------               
+        //загрузка первого каталога в текущий каталог custom-----------------------               
         // Копируем 1 файл в основной каталог
         $custom_main_file = $custom_main."/"."main.zip";
         if (copy($file_zip_1_1, $custom_main_file)){
@@ -45,7 +61,7 @@
         }
         
         // Функция по извлечению файлов из архива без вложенных папок
-        function zip_flatten ( $zipfile, $dest='.' ) 
+        function zip_flatten ( $zipfile, $dest='.' )
         { 
             $zip = new ZipArchive; 
             if ( $zip->open( $zipfile ) ) 
@@ -250,6 +266,59 @@
             echo "Файл 2_4 успешно загружен в каталог ".$catalog_path ."<br>";
         }
 
+        //загрузка второго каталога в действующий каталог current-----------------------
+        // Копируем 2_1 файл в основной каталог
+        $сurrent_path_1_main_file = $сurrent_path_1_main."/"."main.zip";
+        if (copy($file_zip_2_1, $сurrent_path_1_main_file)){
+            echo "Файл 2_1 успешно загружен в каталог ".$сurrent_path_1_main ."<br>";
+        } 
+        //распаковываем архив 2_1
+        if (zip_flatten( $сurrent_path_1_main_file, $сurrent_path_1_main )) {
+            echo "Архив 2_1 успешно разархивирован в каталог ".$сurrent_path_1_main ."<br>";
+        }
+        else {
+            echo 'Ошибка распаковки Архива 2_1 <br>';
+        }
+
+        // Копируем 2_2 файл в дополнительный каталог
+        $сurrent_path_1_dop_1_file = $сurrent_path_1_dop_1."/"."dop_1.zip";
+        if (copy($file_zip_2_2, $сurrent_path_1_dop_1_file)){
+            echo "Файл 2_2 успешно загружен в каталог ".$сurrent_path_1_dop_1 ."<br>";
+        }
+        //распаковываем архив 2_2
+        if (zip_flatten( $сurrent_path_1_dop_1_file, $сurrent_path_1_dop_1 )) {
+            echo "Архив 2_2 успешно разархивирован в каталог ".$сurrent_path_1_dop_1 ."<br>";
+        }
+        else {
+            echo 'Ошибка распаковки Архива 2_2 <br>';
+        }
+
+        // Копируем 2_3 файл в дополнительный каталог
+        $сurrent_path_1_dop_2_file = $сurrent_path_1_dop_2."/"."dop_2.zip";
+        if (copy($file_zip_2_3, $сurrent_path_1_dop_2_file)){
+            echo "Файл 2_1 успешно загружен в каталог ".$сurrent_path_1_dop_2 ."<br>";
+        }
+        //распаковываем архив 2_3
+        if (zip_flatten( $сurrent_path_1_dop_2_file, $сurrent_path_1_dop_2 )) {
+            echo "Архив 2_3 успешно разархивирован в каталог ".$сurrent_path_1_dop_2 ."<br>";
+        }
+        else {
+            echo 'Ошибка распаковки Архива 2_3 <br>';
+        }
+
+        // Копируем 2_4 файл в дополнительный каталог
+        $сurrent_path_1_dop_3_file = $сurrent_path_1_dop_3."/"."dop_3.zip";
+        if (copy($file_zip_2_4, $сurrent_path_1_dop_3_file)){
+            echo "Файл 2_1 успешно загружен в каталог ".$сurrent_path_1_dop_3 ."<br>";
+        }
+        //распаковываем архив 2_4
+        if (zip_flatten( $сurrent_path_1_dop_3_file, $сurrent_path_1_dop_3 )) {
+            echo "Архив 2_4 успешно разархивирован в каталог ".$сurrent_path_1_dop_3 ."<br>";
+        }
+        else {
+            echo 'Ошибка распаковки Архива 2_4 <br>';    
+        }
+
         ///////////////////////////////////////////////////
         /////// Получаем архивы с третьего каталога ///////
         ///////////////////////////////////////////////////
@@ -321,6 +390,59 @@
         // Копируем файл
         if (copy($file_zip_3_4, $full_path_upload_3_4)){
             echo "Файл 3_4 успешно загружен в каталог ".$catalog_path ."<br>";
+        }
+
+        //загрузка третьего каталога в действующий каталог current-----------------------
+        // Копируем 3_1 файл в основной каталог
+        $сurrent_path_2_main_file = $сurrent_path_2_main."/"."main.zip";
+        if (copy($file_zip_3_1, $сurrent_path_2_main_file)){
+            echo "Файл 3_1 успешно загружен в каталог ".$сurrent_path_2_main ."<br>";
+        } 
+        //распаковываем архив 3_1
+        if (zip_flatten( $сurrent_path_2_main_file, $сurrent_path_2_main )) {
+            echo "Архив 3_1 успешно разархивирован в каталог ".$сurrent_path_2_main ."<br>";
+        }
+        else {
+            echo 'Ошибка распаковки Архива 3_1 <br>';
+        }
+
+        // Копируем 3_2 файл в дополнительный каталог
+        $сurrent_path_2_dop_1_file = $сurrent_path_2_dop_1."/"."dop_1.zip";
+        if (copy($file_zip_3_2, $сurrent_path_2_dop_1_file)){
+            echo "Файл 3_2 успешно загружен в каталог ".$сurrent_path_2_dop_1 ."<br>";
+        }
+        //распаковываем архив 3_2
+        if (zip_flatten( $сurrent_path_2_dop_1_file, $сurrent_path_2_dop_1 )) {
+            echo "Архив 3_2 успешно разархивирован в каталог ".$сurrent_path_2_dop_1 ."<br>";
+        }
+        else {
+            echo 'Ошибка распаковки Архива 3_2 <br>';
+        }
+
+        // Копируем 3_3 файл в дополнительный каталог
+        $сurrent_path_2_dop_2_file = $сurrent_path_2_dop_2."/"."dop_2.zip";
+        if (copy($file_zip_3_3, $сurrent_path_2_dop_2_file)){
+            echo "Файл 3_1 успешно загружен в каталог ".$сurrent_path_2_dop_2 ."<br>";
+        }
+        //распаковываем архив 2_3
+        if (zip_flatten( $сurrent_path_2_dop_2_file, $сurrent_path_2_dop_2 )) {
+            echo "Архив 3_3 успешно разархивирован в каталог ".$сurrent_path_2_dop_2 ."<br>";
+        }
+        else {
+            echo 'Ошибка распаковки Архива 3_3 <br>';
+        }
+
+        // Копируем 3_4 файл в дополнительный каталог
+        $сurrent_path_2_dop_3_file = $сurrent_path_2_dop_3."/"."dop_3.zip";
+        if (copy($file_zip_2_4, $сurrent_path_2_dop_3_file)){
+            echo "Файл 3_4 успешно загружен в каталог ".$сurrent_path_2_dop_3 ."<br>";
+        }
+        //распаковываем архив 3_4
+        if (zip_flatten( $сurrent_path_2_dop_3_file, $сurrent_path_2_dop_3 )) {
+            echo "Архив 3_4 успешно разархивирован в каталог ".$сurrent_path_2_dop_3 ."<br>";
+        }
+        else {
+            echo 'Ошибка распаковки Архива 3_4 <br>';    
         }
 
         ///////////////////////////////////////////////////
@@ -406,6 +528,59 @@
         }
         else {
             echo "Файл 4_4 отсутствует на сайте источнике <br>";   
+        }
+
+        //загрузка четвертого каталога в действующий каталог current-----------------------
+        // Копируем 4_1 файл в основной каталог
+        $сurrent_path_3_main_file = $сurrent_path_3_main."/"."main.zip";
+        if (copy($file_zip_4_1, $сurrent_path_3_main_file)){
+            echo "Файл 4_1 успешно загружен в каталог ".$сurrent_path_3_main ."<br>";
+        } 
+        //распаковываем архив 3_1
+        if (zip_flatten( $сurrent_path_3_main_file, $сurrent_path_3_main )) {
+            echo "Архив 4_1 успешно разархивирован в каталог ".$сurrent_path_3_main ."<br>";
+        }
+        else {
+            echo 'Ошибка распаковки Архива 4_1 <br>';
+        }
+
+        // Копируем 4_2 файл в дополнительный каталог
+        $сurrent_path_3_dop_1_file = $сurrent_path_3_dop_1."/"."dop_1.zip";
+        if (copy($file_zip_4_2, $сurrent_path_3_dop_1_file)){
+            echo "Файл 4_2 успешно загружен в каталог ".$сurrent_path_3_dop_1 ."<br>";
+        }
+        //распаковываем архив 4_2
+        if (zip_flatten( $сurrent_path_3_dop_1_file, $сurrent_path_3_dop_1 )) {
+            echo "Архив 4_2 успешно разархивирован в каталог ".$сurrent_path_3_dop_1 ."<br>";
+        }
+        else {
+            echo 'Ошибка распаковки Архива 4_2 <br>';
+        }
+
+        // Копируем 4_3 файл в дополнительный каталог
+        $сurrent_path_3_dop_2_file = $сurrent_path_3_dop_2."/"."dop_2.zip";
+        if (copy($file_zip_4_3, $сurrent_path_3_dop_2_file)){
+            echo "Файл 4_1 успешно загружен в каталог ".$сurrent_path_3_dop_2 ."<br>";
+        }
+        //распаковываем архив 4_3
+        if (zip_flatten( $сurrent_path_3_dop_2_file, $сurrent_path_3_dop_2 )) {
+            echo "Архив 4_3 успешно разархивирован в каталог ".$сurrent_path_3_dop_2 ."<br>";
+        }
+        else {
+            echo 'Ошибка распаковки Архива 4_3 <br>';
+        }
+
+        // Копируем 4_4 файл в дополнительный каталог
+        $сurrent_path_3_dop_3_file = $сurrent_path_3_dop_3."/"."dop_3.zip";
+        if (copy($file_zip_4_4, $сurrent_path_3_dop_3_file)){
+            echo "Файл 4_4 успешно загружен в каталог ".$сurrent_path_3_dop_3 ."<br>";
+        }
+        //распаковываем архив 4_4
+        if (zip_flatten( $сurrent_path_3_dop_3_file, $сurrent_path_3_dop_3 )) {
+            echo "Архив 4_4 успешно разархивирован в каталог ".$сurrent_path_3_dop_3 ."<br>";
+        }
+        else {
+            echo 'Ошибка распаковки Архива 4_4 <br>';    
         }
     ?>
 
